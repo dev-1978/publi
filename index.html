@@ -90,11 +90,11 @@ font-size:.7rem;
 opacity:.6;
 }
 
-/* JOKERS */
+/* Jokers */
 .joker{
 position:fixed;
 pointer-events:none;
-transition:opacity .3s ease;
+transition:opacity .2s ease;
 }
 </style>
 </head>
@@ -137,7 +137,7 @@ for(let i=0;i<trailCount;i++){
     img.src = "joker.png";
     img.className = "joker";
 
-    const size = 120 - (i*22); // líder más grande
+    const size = 120 - (i*22);
     img.style.width = size + "px";
     img.style.opacity = "0";
     img.style.zIndex = 1000 - i;
@@ -174,7 +174,7 @@ function updateTarget(x,y){
         });
     }
 
-    jokers.forEach(j => j.style.opacity = "0.85");
+    jokers.forEach(j => j.style.opacity = "0.9");
 
     target.x = x;
     target.y = y;
@@ -184,12 +184,14 @@ function animate(){
 
     if(active){
 
-        positions[0].x += (target.x - positions[0].x) * 0.07;
-        positions[0].y += (target.y - positions[0].y) * 0.07;
+        // Líder más reactivo
+        positions[0].x += (target.x - positions[0].x) * 0.14;
+        positions[0].y += (target.y - positions[0].y) * 0.14;
 
+        // Cola más fluida
         for(let i=1;i<trailCount;i++){
-            positions[i].x += (positions[i-1].x - positions[i].x) * 0.05;
-            positions[i].y += (positions[i-1].y - positions[i].y) * 0.05;
+            positions[i].x += (positions[i-1].x - positions[i].x) * 0.10;
+            positions[i].y += (positions[i-1].y - positions[i].y) * 0.10;
         }
 
         jokers.forEach((j,i)=>{
