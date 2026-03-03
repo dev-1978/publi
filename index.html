@@ -21,7 +21,6 @@ background:url("seda.png") center/cover no-repeat fixed;
 user-select:none;
 }
 
-/* Overlay oscuro elegante */
 body::before{
 content:"";
 position:fixed;
@@ -65,8 +64,14 @@ opacity:.7;
 color:#ff4d4d;
 }
 
-.main-btn{
-display:inline-block;
+.button-group{
+display:flex;
+flex-direction:column;
+gap:16px;
+}
+
+.btn{
+display:block;
 padding:16px 28px;
 border-radius:14px;
 text-decoration:none;
@@ -80,7 +85,7 @@ box-shadow:0 10px 25px rgba(0,0,0,.7);
 transition:.3s;
 }
 
-.main-btn:hover{
+.btn:hover{
 transform:scale(1.05);
 }
 
@@ -111,10 +116,21 @@ Atención directa y premios reales.
 
 <div class="age">🔞 SOLO MAYORES DE 18 AÑOS</div>
 
-<a class="main-btn"
-href="https://wa.me/5491132592708?text=Hola%20💫%0AVengo%20de%20parte%20de%20Yami%20por%20el%2010%25%20extra.%0AMi%20nombre%20y%20apellido%20es:">
+<div class="button-group">
+
+<!-- BOTÓN PLATAFORMA -->
+<a class="btn"
+href="https://celuapuestas.sbs/" target="_blank">
 CELUAPUESTAS
 </a>
+
+<!-- BOTÓN WHATSAPP -->
+<a class="btn"
+href="https://wa.me/5491132592708?text=Hola%20💫%0AVengo%20de%20parte%20de%20Yami%20por%20el%2010%25%20extra.%0AMi%20nombre%20y%20apellido%20es:">
+ESCRIBIME
+</a>
+
+</div>
 
 <div class="footer">
 JUGÁ RESPONSABLEMENTE
@@ -128,7 +144,7 @@ const positions = [];
 let target = { x: 0, y: 0 };
 let active = false;
 
-const button = document.querySelector(".main-btn");
+const buttons = document.querySelectorAll(".btn");
 
 for(let i=0;i<trailCount;i++){
     const img = document.createElement("img");
@@ -148,13 +164,13 @@ for(let i=0;i<trailCount;i++){
 }
 
 function isOverButton(x,y){
-    const rect = button.getBoundingClientRect();
-    return (
-        x > rect.left &&
-        x < rect.right &&
-        y > rect.top &&
-        y < rect.bottom
-    );
+    for(const btn of buttons){
+        const rect = btn.getBoundingClientRect();
+        if(x > rect.left && x < rect.right && y > rect.top && y < rect.bottom){
+            return true;
+        }
+    }
+    return false;
 }
 
 function updateTarget(x,y){
