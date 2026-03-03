@@ -1,1 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>FICHITAS VIP 👑</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<link rel="icon" type="image/png" href="joker.png">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+min-height:100vh;
+font-family:'Montserrat',sans-serif;
+color:#fff;
+text-align:center;
+overflow:hidden;
+background:url("casino.png") center/cover no-repeat fixed;
+user-select:none;
+}
+
+/* Overlay oscuro elegante */
+body::before{
+content:"";
+position:fixed;
+inset:0;
+background:linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,.9));
+z-index:-1;
+}
+
+.container{
+max-width:420px;
+margin:0 auto;
+padding:110px 20px 60px;
+position:relative;
+z-index:5;
+}
+
+h1{
+font-family:'Cinzel',serif;
+font-size:2.6rem;
+letter-spacing:6px;
+color:#e6c76a;
+margin-bottom:10px;
+}
+
+.subtitle{
+letter-spacing:4px;
+margin-bottom:30px;
+opacity:.9;
+}
+
+.text{
+line-height:1.6;
+margin-bottom:35px;
+}
+
+.age{
+font-size:.8rem;
+letter-spacing:2px;
+margin-bottom:35px;
+opacity:.7;
+color:#ff4d4d;
+}
+
+.main-btn{
+display:inline-block;
+padding:16px 28px;
+border-radius:14px;
+text-decoration:none;
+font-family:'Cinzel',serif;
+letter-spacing:2px;
+font-size:.9rem;
+color:#fff;
+background:rgba(0,0,0,.75);
+border:1.5px solid #e6c76a;
+box-shadow:0 10px 25px rgba(0,0,0,.7);
+transition:.3s;
+}
+
+.main-btn:hover{
+transform:scale(1.05);
+}
+
+.footer{
+margin-top:50px;
+font-size:.7rem;
+opacity:.6;
+}
+
+/* JOKERS */
+.joker{
+position:fixed;
+pointer-events:none;
+transition:opacity .3s ease;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h1>FICHITAS VIP</h1>
+<div class="subtitle">ACCESO EXCLUSIVO</div>
+
+<p class="text">
+Entraste al lugar correcto.<br>
+Atención directa y premios reales.
+</p>
+
+<div class="age">🔞 SOLO MAYORES DE 18 AÑOS</div>
+
+<a class="main-btn"
+href="https://wa.me/5491132592708?text=Hola%20Clau%20vengo%20de%20parte%20de%20Yamila%20quiero%20un%20usuario,%20mi%20nombre%20es%20:">
+CELUAPUESTAS
+</a>
+
+<div class="footer">
+JUGÁ RESPONSABLEMENTE
+</div>
+</div>
+
+<script>
+const trailCount = 5;
+const jokers = [];
+const positions = [];
+let target = { x: 0, y: 0 };
+let active = false;
+
+const button = document.querySelector(".main-btn");
+
+for(let i=0;i<trailCount;i++){
+
+    const img = document.createElement("img");
+    img.src = "joker.png";
+    img.className = "joker";
+
+    const size = 120 - (i*22); // líder más grande
+    img.style.width = size + "px";
+    img.style.opacity = "0";
+    img.style.zIndex = 1000 - i;
+    img.style.filter = "brightness(0.85) contrast(1.1) drop-shadow(0 0 20px rgba(255,0,0,.3))";
+
+    document.body.appendChild(img);
+
+    jokers.push(img);
+    positions.push({x:0,y:0});
+}
+
+function isOverButton(x,y){
+    const rect = button.getBoundingClientRect();
+    return (
+        x > rect.left &&
+        x < rect.right &&
+        y > rect.top &&
+        y < rect.bottom
+    );
+}
+
+function updateTarget(x,y){
+
+    if(isOverButton(x,y)){
+        jokers.forEach(j => j.style.opacity = "0");
+        return;
+    }
+
+    if(!active){
+        active = true;
+        positions.forEach(p=>{
+            p.x = x;
+            p.y = y;
+        });
+    }
+
+    jokers.forEach(j => j.style.opacity = "0.85");
+
+    target.x = x;
+    target.y = y;
+}
+
+function animate(){
+
+    if(active){
+
+        positions[0].x += (target.x - positions[0].x) * 0.07;
+        positions[0].y += (target.y - positions[0].y) * 0.07;
+
+        for(let i=1;i<trailCount;i++){
+            positions[i].x += (positions[i-1].x - positions[i].x) * 0.05;
+            positions[i].y += (positions[i-1].y - positions[i].y) * 0.05;
+        }
+
+        jokers.forEach((j,i)=>{
+            j.style.left = (positions[i].x - j.offsetWidth/2) + "px";
+            j.style.top  = (positions[i].y - j.offsetHeight/2) + "px";
+        });
+    }
+
+    requestAnimationFrame(animate);
+}
+
+document.addEventListener("mousemove", e=>{
+    updateTarget(e.clientX,e.clientY);
+});
+
+document.addEventListener("touchmove", e=>{
+    const t = e.touches[0];
+    updateTarget(t.clientX,t.clientY);
+},{passive:true});
+
+animate();
+</script>
+
+</body>
+</html>
