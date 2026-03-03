@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>FICHITAS VIP 👑</title>
+<title>FICHITAS CLAU 👑</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="icon" type="image/png" href="joker.png">
@@ -26,7 +26,7 @@ body::before{
 content:"";
 position:fixed;
 inset:0;
-background:linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,.9));
+background:linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.88));
 z-index:-1;
 }
 
@@ -90,7 +90,6 @@ font-size:.7rem;
 opacity:.6;
 }
 
-/* Jokers */
 .joker{
 position:fixed;
 pointer-events:none;
@@ -113,7 +112,7 @@ Atención directa y premios reales.
 <div class="age">🔞 SOLO MAYORES DE 18 AÑOS</div>
 
 <a class="main-btn"
-href="https://wa.me/5491132592708?text=Hola%20Clau%20vengo%20de%20parte%20de%20Yamila%20quiero%20un%20usuario,%20mi%20nombre%20es%20:">
+href="https://wa.me/5491132592708?text=Hola%20💫%0AVengo%20de%20parte%20de%20Yami%20por%20el%2010%25%20extra.%0AMi%20nombre%20y%20apellido%20es:">
 CELUAPUESTAS
 </a>
 
@@ -132,7 +131,6 @@ let active = false;
 const button = document.querySelector(".main-btn");
 
 for(let i=0;i<trailCount;i++){
-
     const img = document.createElement("img");
     img.src = "joker.png";
     img.className = "joker";
@@ -184,11 +182,9 @@ function animate(){
 
     if(active){
 
-        // Líder más reactivo
         positions[0].x += (target.x - positions[0].x) * 0.14;
         positions[0].y += (target.y - positions[0].y) * 0.14;
 
-        // Cola más fluida
         for(let i=1;i<trailCount;i++){
             positions[i].x += (positions[i-1].x - positions[i].x) * 0.10;
             positions[i].y += (positions[i-1].y - positions[i].y) * 0.10;
